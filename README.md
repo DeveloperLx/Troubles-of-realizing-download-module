@@ -96,7 +96,7 @@
 ---
 * 只要你亲手动手试一试，就会发现如下大跌眼球的惊恐现象！！
 
->
+
 
 * 惊人事实 1： 对queue中前一个下载operation执行pause方法，下一个operation并不能自动启动进入正在执行的状态！！
 
@@ -169,12 +169,12 @@ Index | Description | isReady | isExecuting | isPaused | isCancelled | isFinishe
 1.	对isReady状态的operation执行resume、pause、cancel等方法是没有任何用处的，所以为了确保执行正确，在对operation执行resume、pause、cancel前，都要首先执行[operation start]。（对已经start过的operation执行start不会造成任何影响）
 2.	对处于isPaused的operation执行cancel方法是无法得到正确结果的，所以每次执行cancel方法前，都要先执行一下[operation resume]。 (同样对于正处于isExecuting状态的operation来说，执行resume方法也是不会造成任何影响的)
 3.	对于下载模块这个纠结之处来说，本地持久化下载记录的相关数据也是必不可少的，理由如下：
->
-	a.	AFHTTPRequestOperation、NSMutableArray这些都是运行时的东西，一关掉app，这些东西自然也都消失得无影无踪了。我们能让下载记录就此消失得无影无踪么？NO！显然是不能接受的 
-	b.	我们下载得到的那个文件，可能是已下载完成的，可能是只下载了部分的；而只下载了部分这种的，又可能是下载中途暂停了的，失败的，被取消的等等情况。请问单凭这个文件如何判断它是属于哪种情况？而且这还不够，有些下载任务根本可能就还未生成相应的下载文件，app就已经被关了啊！你能就把这种的下载任务扔掉吗？显然是绝不可以的
-	c.	不使用operationQueue我们同样无法手动将operation标记为队列等待的isReady状态，怎么办？只有将operation设定为paused，然后相应的数据记录标记为isReady状态好了（本人使用的是CoreData进行本地持久化存储）
-	d.	......用operation外的数据模型记录下载任务的状态好处还有很多，但同时带来的同步更新问题也有很多，具体就留给大家自己去体会了！
-
+```--
+  	1.	AFHTTPRequestOperation、NSMutableArray这些都是运行时的东西，一关掉app，这些东西自然也都消失得无影无踪了。我们能让下载记录就此消失得无影无踪么？NO！显然是不能接受的  
+  	2.	我们下载得到的那个文件，可能是已下载完成的，可能是只下载了部分的；而只下载了部分这种的，又可能是下载中途暂停了的，失败的，被取消的等等情况。请问单凭这个文件如何判断它是属于哪种情况？而且这还不够，有些下载任务根本可能就还未生成相应的下载文件，app就已经被关了啊！你能就把这种的下载任务扔掉吗？显然是绝不可以的
+	3.	不使用operationQueue我们同样无法手动将operation标记为队列等待的isReady状态，怎么办？只有将operation设定为paused，然后相应的数据记录标记为isReady状态好了（本人使用的是CoreData进行本地持久化存储）
+	4.	......用operation外的数据模型记录下载任务的状态好处还有很多，但同时带来的同步更新问题也有很多，具体就留给大家自己去体会了！
+```
 
 ---
 *	以上就是本人总结下载模块实现时需要注意到的种种内容。当然各位大神如果有更好的方案提出，比如用本人掌握得还不够好的stream如何实现上述需求，本人也愿虚心听取以将此处完善得更好。欢迎直言批评与不吝赐教！！
