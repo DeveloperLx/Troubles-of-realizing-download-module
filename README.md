@@ -20,8 +20,7 @@
 
 > 那就先来看下实现队列下载、断点续传等需求的关键示例代码吧!
 
-
-
+```
 	NSError * error = nil;
 
 	// 创建下载队列
@@ -82,6 +81,7 @@
     
     //	判断downloadOperation是否存在在downloadOperationQueue当中
     [downloadOperationQueue.operations containsObject:downloadOperation]
+```    
 
 * 以上代码创建了一个AFHTTPRequestOperation对象作为单个下载任务，并将其加入到*NSOperationQueue*中。仿照上例，我们可以创建多个AFHTTPRequestOperation对象并加入到*NSOperationQueue*中，即形成了下载队列
 
