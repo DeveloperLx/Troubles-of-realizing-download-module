@@ -1,4 +1,4 @@
-#	实现项目下载需求时遇到过的那些坑
+#	实现项目下载需求时遇过的那些坑
 
 	`来自DeveloperLx的github`
 ---
@@ -155,7 +155,7 @@ Index | Description | isReady | isExecuting | isPaused | isCancelled | isFinishe
 
 ######	理由如下：
 
-1.	你无法妥善地实现“队列中最多仅能有一个下载任务正在进行”这条产品经理臆测认为会让开发变简单的需求！！比方说，你让NSOperationQueue中一个operation暂停后，下一个任务并不会自动启动啊！有人说可以手动去start下一个operation，如果这个姑且算做可以接受，可是问题又来了：我们没有办法手动将一个operation置为isReady状态啊！！处于isReady状态的operation，要么是还未加入queue，要么是加入了还未轮到执行，但是它只要一执行，就再也回不到isReady的状态了！那我们要让暂停的operation恢复到等待下载状态该怎么搞？此时可能还有另一operation正在执行啊！！反之笔者搞了半天，是无能为力了
+1.	你无法妥善地实现“队列中最多仅能有一个下载任务正在进行”这条产品经理臆测会让开发变简单的需求！！比方说，你让NSOperationQueue中一个operation暂停后，下一个任务并不会自动启动啊！有人说可以手动去start下一个operation，如果这个姑且算做可以接受，可是问题又来了：我们没有办法手动将一个operation置为isReady状态啊！！处于isReady状态的operation，要么是还未加入queue，要么是加入了还未轮到执行，但是它只要一执行，就再也回不到isReady的状态了！那我们要让暂停的operation恢复到等待下载状态该怎么搞？此时可能还有另一operation正在执行啊！！反之笔者搞了半天，是无能为力了
 
 2.	下载是需要一定时间的过程，需要不停地向服务器进行请求，那么就永远避免不了因为网络等原因中途会失败的问题。可要命的是，一旦下载失败，operation就会毫不妥协地从queue中被移除掉啊！！你能在这时候让你的下载任务从UI界面上消失掉吗？显然大BOSS是不会允许你这么干的。有人说可以重建operation再加入到queue中，可那样你只能将operation插到队尾，列表顺序就被打乱了啊！！你去瞧瞧看，operationQueue.operations，那可只是一个**只读属性**啊！！
 
