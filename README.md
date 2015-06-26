@@ -179,3 +179,6 @@ Index | Description | isReady | isExecuting | isPaused | isCancelled | isFinishe
 ---
 *	以上就是本人总结下载模块实现时需要注意到的种种内容。当然各位大神如果有更好的方案提出，比如用本人掌握得还不够好的stream如何实现上述需求，本人也愿虚心听取以将此处完善得更好。欢迎直言批评与不吝赐教！！
 ###### 本人第一次写博，以前较懒全抛的是开源库。本文欢迎转载，但请务必标明出处！如果感觉本人总结的对于各位思路有所小小帮助的话，恳求赐星一颗！感激之情如滔滔江水向东流😄
+
+---
+续篇（<https://github.com/DeveloperLx/Dreamy_download_manage_solution>）
